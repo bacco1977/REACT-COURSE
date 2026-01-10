@@ -7,9 +7,9 @@ export function Counter() {
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-      <button onClick={() => setCount(count - 1)}>-</button>
+      <button onClick={() => setCount((prev) => prev - 1)}>-</button>
       <strong>{count}</strong>
-      <button onClick={() => setCount(count + 1)}>+</button>
+      <button onClick={() => setCount((prev) => prev + 1)}>+</button>
       <button onClick={() => setCount(0)}>Reset</button>
     </div>
   );

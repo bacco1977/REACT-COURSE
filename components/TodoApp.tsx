@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 type Todo = {
   id: string;
@@ -13,11 +13,12 @@ export function TodoApp() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   function addTodo() {
-    if (!text.trim()) return;
+    const trimmed = text.trim();
+    if (!trimmed) return;
 
     const newTodo: Todo = {
       id: crypto.randomUUID(),
-      text: text.trim(),
+      text: trimmed,
       done: false,
     };
 
@@ -35,6 +36,21 @@ export function TodoApp() {
     setTodos((prev) => prev.filter((t) => t.id !== id));
   }
 
+  function clearCompleted() {
+    setTodos((prev) => prev.filter((t) => !t.done));
+  }
+
+  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") addTodo();
+  }
+
+  const remaining = useMemo(
+    () => todos.filter((t) => !t.done).length,
+    [todos]
+  );
+
+  const hasCompleted = todos.some((t) => t.done);
+
   return (
     <div style={{ maxWidth: 420 }}>
       <h2>Todos</h2>
@@ -43,31 +59,51 @@ export function TodoApp() {
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyDown={onKeyDown}
           placeholder="Add a todo..."
           style={{ flex: 1 }}
         />
-        <button onClick={addTodo}>Add</button>
+        <button onClick={addTodo} disabled={!text.trim()}>
+          Add
+        </button>
       </div>
 
-      <ul style={{ marginTop: 12, paddingLeft: 18 }}>
-        {todos.map((t) => (
-          <li key={t.id} style={{ marginTop: 8 }}>
-            <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <input
-                type="checkbox"
-                checked={t.done}
-                onChange={() => toggleTodo(t.id)}
-              />
-              <span style={{ textDecoration: t.done ? "line-through" : "none" }}>
-                {t.text}
-              </span>
-              <button onClick={() => removeTodo(t.id)} style={{ marginLeft: "auto" }}>
-                ✕
-              </button>
-            </label>
-          </li>
-        ))}
-      </ul>
+      <div style={{ marginTop: 12, display: "flex", gap: 12, opacity: 0.8 }}>
+        <span>{remaining} remaining</span>
+
+        <button onClick={clearCompleted} disabled={!hasCompleted}>
+          Clear completed
+        </button>
+      </div>
+
+      {todos.length === 0 ? (
+        <p style={{ marginTop: 12, opacity: 0.7 }}>
+          No todos yet — add one above ✅
+        </p>
+      ) : (
+        <ul style={{ marginTop: 12, paddingLeft: 18 }}>
+          {todos.map((t) => (
+            <li key={t.id} style={{ marginTop: 8 }}>
+              <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <input
+                  type="checkbox"
+                  checked={t.done}
+                  onChange={() => toggleTodo(t.id)}
+                />
+                <span style={{ textDecoration: t.done ? "line-through" : "none" }}>
+                  {t.text}
+                </span>
+                <button
+                  onClick={() => removeTodo(t.id)}
+                  style={{ marginLeft: "auto" }}
+                >
+                  ✕
+                </button>
+              </label>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

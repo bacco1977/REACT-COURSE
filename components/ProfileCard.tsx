@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type ProfileCardProps = {
   name: string;
   role: string;
@@ -6,7 +8,13 @@ type ProfileCardProps = {
   isOnline?: boolean;
 };
 
-export function ProfileCard({ name, role, avatarUrl, company, isOnline }: ProfileCardProps) {
+export function ProfileCard({
+  name,
+  role,
+  avatarUrl,
+  company,
+  isOnline,
+}: ProfileCardProps) {
   return (
     <div
       style={{
@@ -17,19 +25,21 @@ export function ProfileCard({ name, role, avatarUrl, company, isOnline }: Profil
         borderRadius: 12,
         padding: 12,
         maxWidth: 360,
-        position: "relative",
       }}
     >
-      <div style={{ position: "relative" }}>
-        <img
+      <div style={{ position: "relative", width: 56, height: 56 }}>
+        <Image
           src={avatarUrl}
           alt={name}
-          width={56}
-          height={56}
-          style={{ borderRadius: 999 }}
+          fill
+          sizes="56px"
+          style={{ borderRadius: 999, objectFit: "cover" }}
         />
+
         {isOnline !== undefined && (
           <span
+            aria-label={isOnline ? "Online" : "Offline"}
+            title={isOnline ? "Online" : "Offline"}
             style={{
               position: "absolute",
               bottom: 2,
@@ -43,6 +53,7 @@ export function ProfileCard({ name, role, avatarUrl, company, isOnline }: Profil
           />
         )}
       </div>
+
       <div>
         <div style={{ fontWeight: 600 }}>{name}</div>
         <div style={{ opacity: 0.7 }}>{role}</div>
@@ -51,5 +62,3 @@ export function ProfileCard({ name, role, avatarUrl, company, isOnline }: Profil
     </div>
   );
 }
-
-  
