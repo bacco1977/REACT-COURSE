@@ -1,6 +1,9 @@
 import { ProfileCard } from "@/components/ProfileCard";
 import { Counter } from "@/components/Counter";
 import { TodoApp } from "@/components/TodoApp";
+import { GithubUserSearch } from "@/components/GithubUserSearch";
+import { SignupForm } from "@/components/SignupForm";
+
 
 const people = [
   {
@@ -63,6 +66,15 @@ export default function Home() {
         <h2 style={{ fontSize: 20, fontWeight: 600 }}>Day 2 — Todos</h2>
         <TodoApp />
       </section>
+
+      <section style={{ display: "grid", gap: 12 }}>
+        <GithubUserSearch />
+      </section>
+
+      <section style={{ display: "grid", gap: 12 }}>
+        <SignupForm />
+      </section>
+
     </main>
   );
 }
