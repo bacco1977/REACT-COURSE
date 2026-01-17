@@ -1,6 +1,6 @@
 import { ProfileCard } from "@/components/ProfileCard";
 import { Counter } from "@/components/Counter";
-import { TodoApp } from "@/components/TodoApp";
+import { TodoApp } from "@/components/todos/TodoApp";
 import { GithubUserSearch } from "@/components/GithubUserSearch";
 import { SignupForm } from "@/components/SignupForm";
 
