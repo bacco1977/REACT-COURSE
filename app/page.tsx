@@ -3,6 +3,7 @@ import { Counter } from "@/components/Counter";
 import { TodoApp } from "@/components/todos/TodoApp";
 import { GithubUserSearch } from "@/components/GithubUserSearch";
 import { SignupForm } from "@/components/SignupForm";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 
 const people = [
@@ -36,6 +37,7 @@ export default function Home() {
         <p style={{ opacity: 0.7 }}>
           Day 1: Components + Props | Day 2: State + Events
         </p>
+        <ThemeToggle />
       </header>
 
       {/* Day 1 */}

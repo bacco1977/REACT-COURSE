@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { useTheme } from "@/contexts/ThemeContext";
+
 
 type ProfileCardProps = {
   name: string;
@@ -15,13 +19,17 @@ export function ProfileCard({
   company,
   isOnline,
 }: ProfileCardProps) {
+  const { theme } = useTheme();
+
   return (
     <div
       style={{
+        backgroundColor: theme === "dark" ? "#111" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        border: "1px solid #eee",
         display: "flex",
         gap: 12,
         alignItems: "center",
-        border: "1px solid #eee",
         borderRadius: 12,
         padding: 12,
         maxWidth: 360,
